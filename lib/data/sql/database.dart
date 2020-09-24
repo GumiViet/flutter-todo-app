@@ -35,7 +35,7 @@ class DBProvider {
   Future<int> insert(TodoModel todo) async {
     int count = 0;
     try {
-      await _database.transaction((txn) async {
+      await (await database).transaction((txn) async {
         count = await txn.rawInsert(
             'INSERT INTO $_tableTodo ($_columnId, $_columnName, $_columnValue) VALUES(${todo.id}, ${todo.name}, ${todo.value})');
         AppLogger.d(count);
@@ -47,7 +47,7 @@ class DBProvider {
   }
 
   Future<List<TodoModel>> getTodo(int id) async {
-    List<dynamic> maps = await _database.query(_tableTodo);
+    List<dynamic> maps = await (await database).query(_tableTodo);
     if (maps.length > 0) {
       return TodoModel().getListFromJson(maps);
     }
@@ -55,14 +55,14 @@ class DBProvider {
   }
 
   Future<int> delete(int id) async {
-    return await _database
+    return await (await database)
         .delete(_tableTodo, where: '$_columnId = ?', whereArgs: [id]);
   }
 
   Future<int> update(TodoModel todo) async {
-    return await _database.update(_tableTodo, todo.toJson(),
+    return await (await database).update(_tableTodo, todo.toJson(),
         where: '$_columnId = ?', whereArgs: [todo.id]);
   }
 
-  Future close() async => _database.close();
+  Future close() async => await (await database).close();
 }
