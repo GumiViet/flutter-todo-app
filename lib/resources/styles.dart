@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_to_do/resources/colors.dart';
 import 'package:flutter_to_do/resources/fonts.dart';
@@ -19,4 +21,11 @@ class AppStyles {
     ),
     fontFamily: AppFonts.typeRegular,
   );
+
+  TextStyle grayBold(double size) {
+    return TextStyle(
+        color: AppColors.grayMedium,
+        fontSize: size,
+        fontFamily: AppFonts.typeBold);
+  }
 }

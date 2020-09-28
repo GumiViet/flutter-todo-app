@@ -1,3 +1,4 @@
 {
-    "text_home" : "Flutter todo"
+    "text_title_home": "Home",
+    "text_no_data": "No data!"
 }

@@ -7,6 +7,8 @@ import 'package:sqflite/sqlite_api.dart';
 class DBProvider {
   DBProvider._();
 
+  DBProvider();
+
   static final DBProvider db = DBProvider._();
 
   Database _database;
@@ -28,7 +30,7 @@ class DBProvider {
     return await openDatabase(path, version: 1, onOpen: (db) {},
         onCreate: (Database db, int version) async {
       await db.execute(
-          'CREATE TABLE $_tableTodo ($_columnId INTEGER PRIMARY KEY, $_columnName TEXT, $_columnValue INTEGER)');
+          'CREATE TABLE $_tableTodo ($_columnId INTEGER PRIMARY KEY AUTOINCREMENT, $_columnName TEXT, $_columnValue INTEGER)');
     });
   }
 
@@ -37,7 +39,7 @@ class DBProvider {
     try {
       await (await database).transaction((txn) async {
         count = await txn.rawInsert(
-            'INSERT INTO $_tableTodo ($_columnId, $_columnName, $_columnValue) VALUES(${todo.id}, ${todo.name}, ${todo.value})');
+            'INSERT INTO $_tableTodo ($_columnName, $_columnValue) VALUES("${todo.name}", ${todo.value})');
         AppLogger.d(count);
       });
     } catch (e) {
@@ -46,8 +48,9 @@ class DBProvider {
     return count;
   }
 
-  Future<List<TodoModel>> getTodo(int id) async {
-    List<dynamic> maps = await (await database).query(_tableTodo);
+  Future<List<TodoModel>> getListTodo() async {
+    List<dynamic> maps =
+        await (await database).rawQuery("select * from $_tableTodo");
     if (maps.length > 0) {
       return TodoModel().getListFromJson(maps);
     }
