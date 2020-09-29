@@ -9,7 +9,11 @@ import 'package:flutter_to_do/screen/splash/splash_screen.dart';
 RouteFactory generateRoute = (setting) => Map.fromEntries([
       ...getScreen(AppConstants.ROUTE_SPLASH, SplashScreen()).entries,
       ...getScreen(AppConstants.ROUTE_HOME_SCREEN, HomeScreen()).entries,
-      ...getScreen(AppConstants.ROUTE_ADD_ITEM_SCREEN, AddItemScreen()).entries,
+      ...getScreen(
+          AppConstants.ROUTE_ADD_ITEM_SCREEN,
+          AddItemScreen(
+            model: setting.arguments,
+          )).entries,
       ...getScreen(AppConstants.ROUTE_DETAIL_ITEM_SCREEN, DetailItemScreen())
           .entries,
       ...getScreen(AppConstants.ROUTE_EDIT_ITEM_SCREEN, EditItemScreen())

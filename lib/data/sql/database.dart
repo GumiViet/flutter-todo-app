@@ -13,9 +13,9 @@ class DBProvider {
 
   Database _database;
   final String _tableTodo = 'todo';
-  final String _columnId = '_id';
-  final String _columnName = '_name';
-  final String _columnValue = '_value';
+  final String _columnId = 'id';
+  final String _columnName = 'name';
+  final String _columnValue = 'value';
   final String _dbName = 'app.db';
 
   Future<Database> get database async {
@@ -30,18 +30,16 @@ class DBProvider {
     return await openDatabase(path, version: 1, onOpen: (db) {},
         onCreate: (Database db, int version) async {
       await db.execute(
-          'CREATE TABLE $_tableTodo ($_columnId INTEGER PRIMARY KEY AUTOINCREMENT, $_columnName TEXT, $_columnValue INTEGER)');
+          'CREATE TABLE $_tableTodo ($_columnId INTEGER PRIMARY KEY, $_columnName TEXT, $_columnValue INTEGER)');
     });
   }
 
   Future<int> insert(TodoModel todo) async {
     int count = 0;
     try {
-      await (await database).transaction((txn) async {
-        count = await txn.rawInsert(
-            'INSERT INTO $_tableTodo ($_columnName, $_columnValue) VALUES("${todo.name}", ${todo.value})');
-        AppLogger.d(count);
-      });
+      var db = (await database).batch();
+      db.insert(_tableTodo, todo.toJson());
+      count = (await db.commit()).length;
     } catch (e) {
       AppLogger.e(e);
     }
@@ -49,22 +47,26 @@ class DBProvider {
   }
 
   Future<List<TodoModel>> getListTodo() async {
-    List<dynamic> maps =
-        await (await database).rawQuery("select * from $_tableTodo");
+    var db = (await database).batch();
+    db.query(_tableTodo);
+    List<dynamic> maps = await db.commit();
     if (maps.length > 0) {
-      return TodoModel().getListFromJson(maps);
+      return TodoModel().getListFromJson(maps.first);
     }
     return [];
   }
 
   Future<int> delete(int id) async {
-    return await (await database)
-        .delete(_tableTodo, where: '$_columnId = ?', whereArgs: [id]);
+    var db = (await database).batch();
+    db.delete(_tableTodo, where: '$_columnId = ?', whereArgs: [id]);
+    return (await db.commit()).length;
   }
 
   Future<int> update(TodoModel todo) async {
-    return await (await database).update(_tableTodo, todo.toJson(),
+    var db = (await database).batch();
+    db.update(_tableTodo, todo.toJson(),
         where: '$_columnId = ?', whereArgs: [todo.id]);
+    return (await db.commit()).length;
   }
 
   Future close() async => await (await database).close();

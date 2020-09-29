@@ -3,7 +3,7 @@ class TodoModel {
   String name;
   int value;
 
-  TodoModel({this.id, this.name, this.value});
+  TodoModel({this.id = 0, this.name = "", this.value = 0});
 
   factory TodoModel.fromJson(Map<String, dynamic> json) => TodoModel(
         id: json['id'] as int,

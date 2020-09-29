@@ -28,4 +28,11 @@ class AppStyles {
         fontSize: size,
         fontFamily: AppFonts.typeBold);
   }
+
+  TextStyle whiteRegular(double size) {
+    return TextStyle(
+      color: AppColors.white,
+      fontSize: size,
+    );
+  }
 }

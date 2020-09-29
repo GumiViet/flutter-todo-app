@@ -40,7 +40,7 @@ class _SplashScreenState extends BaseScreen<SplashScreen> {
   }
 
   void loadData() async {
-    Timer(Duration(milliseconds: 1500), () {
+    Timer(Duration(milliseconds: 500), () {
       goToAndRemoveScreen(AppConstants.ROUTE_HOME_SCREEN);
     });
   }
