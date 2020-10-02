@@ -110,13 +110,12 @@ class _HomeScreenState extends BaseScreen<HomeScreen> {
         size: 50,
       ),
       onPressed: () => _gotoAndGetAction(TodoModel(id: id)),
-      // onPressed: () => viewModel.addTodo(),
     );
   }
 
   _gotoAndGetAction(TodoModel item) async {
     var result = await goToScreen(AppConstants.ROUTE_ADD_ITEM_SCREEN, item);
-    if (result != 0) viewModel.getListTodo();
+    if (result != null && result != 0) viewModel.getListTodo();
   }
 
   _deleteTodo(TodoModel item) async {
@@ -138,16 +137,24 @@ class _HomeScreenState extends BaseScreen<HomeScreen> {
               actions: [
                 CupertinoDialogAction(
                   child: Text("OK"),
-                  onPressed: () => Navigator.of(context).pop(),
+                  onPressed: () => popToScreen(item),
                 ),
                 CupertinoDialogAction(
                   child: Text(getString(AppLangs.text_delete_item)),
                   onPressed: () {
                     _deleteTodo(item);
-                    Navigator.of(context).pop();
+                    popToScreen(item);
                   },
                 )
               ],
             ));
+  }
+
+  Future goToWithArgument(BuildContext context, String routeName,
+      [dynamic param]) async {
+    return await Navigator.of(context).pushNamed(
+      routeName,
+      arguments: param,
+    );
   }
 }

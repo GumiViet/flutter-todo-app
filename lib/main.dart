@@ -7,8 +7,8 @@ import 'package:flutter_to_do/resources/localization/application.dart';
 import 'package:flutter_to_do/resources/styles.dart';
 import 'package:flutter_to_do/screen/splash/splash_view_model.dart';
 import 'package:provider/provider.dart';
-import 'package:route_annotation/route_annotation.dart' as router;
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:route_annotation/route_annotation.dart';
 
 import 'dependency_injection/dependency_injection.dart';
 
@@ -19,7 +19,7 @@ void main() async => {
       runApp(MyApp()),
     };
 
-@router.Router()
+@router
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();

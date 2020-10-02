@@ -41,11 +41,11 @@ abstract class BaseScreen<T extends StatefulWidget> extends State<T> {
   }
 
   Future goToScreen(String screen, [dynamic params]) async {
-    await Navigator.of(context).pushNamed(screen, arguments: params);
+    return await Navigator.of(context).pushNamed(screen, arguments: params);
   }
 
   Future goToAndRemoveScreen(String screen, [dynamic params]) async {
-    await Navigator.of(context).pushNamedAndRemoveUntil(
+    return await Navigator.of(context).pushNamedAndRemoveUntil(
         screen, (Route<dynamic> route) => false,
         arguments: params);
   }

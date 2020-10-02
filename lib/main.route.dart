@@ -17,6 +17,6 @@ RouteFactory generateRoute = (setting) => Map.fromEntries([
 Map<String, RouteFactory> getScreen(String router, StatefulWidget screen) =>
     <String, RouteFactory>{
       router: (RouteSettings settings) => MaterialPageRoute(
-            builder: (BuildContext context) => screen,
+            builder: (_) => screen,
           ),
     };

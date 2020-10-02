@@ -10,7 +10,7 @@ import 'package:flutter_to_do/screen/splash/splash_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:route_annotation/route_annotation.dart';
 
-@RoutePage(isInitialRoute: true)
+@initialPage
 class SplashScreen extends StatefulWidget {
   @override
   _SplashScreenState createState() => _SplashScreenState();
