@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_to_do/base/base_screen.dart';
-import 'package:flutter_to_do/di/di.dart';
+import 'package:flutter_to_do/dependency_injection/dependency_injection.dart';
 import 'package:flutter_to_do/resources/colors.dart';
 import 'package:flutter_to_do/resources/constants.dart';
 import 'package:flutter_to_do/screen/splash/splash_view_model.dart';

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_to_do/base/base_screen.dart';
-import 'package:flutter_to_do/di/di.dart';
+import 'package:flutter_to_do/dependency_injection/dependency_injection.dart';
 import 'package:flutter_to_do/models/model/to_do_model.dart';
 import 'package:flutter_to_do/resources/colors.dart';
 import 'package:flutter_to_do/resources/langs.dart';
@@ -143,7 +143,10 @@ class _AddItemScreenState extends BaseScreen<AddItemScreen> {
         ? await addItemViewModel.addItemTodo(model)
         : await addItemViewModel.editItemTodo(model);
     if (result != 0) {
-      Fluttertoast.showToast(msg: getString(AppLangs.text_added));
+      Fluttertoast.showToast(
+          msg: getString(widget.statusEdit
+              ? AppLangs.text_added
+              : AppLangs.text_edit_item));
       Timer(Duration(seconds: 1), () {
         popToScreen(result);
       });

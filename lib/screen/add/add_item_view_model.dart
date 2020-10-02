@@ -1,6 +1,6 @@
 import 'package:flutter_to_do/base/base_view_model.dart';
 import 'package:flutter_to_do/data/sql/database.dart';
-import 'package:flutter_to_do/di/di.dart';
+import 'package:flutter_to_do/dependency_injection/dependency_injection.dart';
 import 'package:flutter_to_do/models/model/to_do_model.dart';
 
 class AddItemViewModel extends BaseViewModel {

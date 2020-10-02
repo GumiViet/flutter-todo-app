@@ -8,4 +8,6 @@ class AppLangs {
   static const text_edit_item = "text_edit_item";
   static const text_delete_item = "text_delete_item";
   static const text_added = "text_added";
+  static const text_deleted = "text_deleted";
+  static const text_detail_todo = "text_detail_todo";
 }

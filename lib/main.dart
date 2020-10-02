@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_to_do/di/di.dart';
 import 'package:flutter_to_do/resources/constants.dart';
 import 'package:flutter_to_do/main.route.dart';
 import 'package:flutter_to_do/resources/localization/app_translations_delegate.dart';
@@ -8,8 +7,10 @@ import 'package:flutter_to_do/resources/localization/application.dart';
 import 'package:flutter_to_do/resources/styles.dart';
 import 'package:flutter_to_do/screen/splash/splash_view_model.dart';
 import 'package:provider/provider.dart';
-import 'package:route_annotation/route_annotation.dart';
+import 'package:route_annotation/route_annotation.dart' as router;
 import 'package:flutter_localizations/flutter_localizations.dart';
+
+import 'dependency_injection/dependency_injection.dart';
 
 void main() async => {
       initInject(),
@@ -18,7 +19,7 @@ void main() async => {
       runApp(MyApp()),
     };
 
-@Router()
+@router.Router()
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
