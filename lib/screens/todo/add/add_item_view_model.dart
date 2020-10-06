@@ -1,13 +1,15 @@
-import 'package:flutter_to_do/@core/data/database/todo_database.dart';
+import 'package:flutter_to_do/@core/data/database/todo.database.dart';
 import 'package:flutter_to_do/@core/dependency_injection.dart';
-import 'package:flutter_to_do/@core/repo/todo/to_do_model.dart';
+import 'package:flutter_to_do/@core/repo/todo/to_do_response.dart';
 import 'package:flutter_to_do/@core/services/view_state.service.dart';
 
 class AddItemViewModel extends ViewStateModel {
   DBProvider db = byInject<DBProvider>();
 
-  TodoModel _modelTodo = TodoModel();
-  TodoModel get modelTodo => _modelTodo;
+  TodoResponse _modelTodo = TodoResponse();
+
+  TodoResponse get modelTodo => _modelTodo;
+
   set modelTodo(value) => _modelTodo = value;
 
   void setValue(String val) {
@@ -20,12 +22,12 @@ class AddItemViewModel extends ViewStateModel {
     notifyListeners();
   }
 
-  Future<int> addItemTodo(TodoModel item) async {
-    var result = await db.insert(item);
+  Future<int> addItemTodo(TodoResponse item) async {
+    var result = item.name.isNotEmpty ? await db.insert(item) : -1;
     return result;
   }
 
-  Future<int> editItemTodo(TodoModel item) async {
+  Future<int> editItemTodo(TodoResponse item) async {
     var result = await db.update(item);
     return result;
   }

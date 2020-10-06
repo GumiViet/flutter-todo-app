@@ -3,6 +3,7 @@ import 'package:flutter_to_do/@shared/utils/utils.dart';
 import 'package:flutter_to_do/resources/styles/colors.dart';
 
 abstract class BaseScreen<T extends StatefulWidget> extends State<T> {
+
   String getStringById(String key) => getString(context, key);
 
   Widget baseScaffold(
@@ -27,4 +28,6 @@ abstract class BaseScreen<T extends StatefulWidget> extends State<T> {
       floatingActionButton: floatButton,
     );
   }
+
+
 }

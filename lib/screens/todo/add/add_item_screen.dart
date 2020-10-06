@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_to_do/@core/repo/todo/to_do_response.dart';
 import 'package:flutter_to_do/@shared/utils/utils.dart';
 import 'package:flutter_to_do/@core/dependency_injection.dart';
-import 'package:flutter_to_do/@core/repo/todo/to_do_model.dart';
 import 'file:///D:/flutter-todo-app/lib/@shared/widgets/custom_text_field/custom_editing.controller.dart';
 import 'package:flutter_to_do/resources/styles/colors.dart';
 import 'package:flutter_to_do/resources/localization/langs.dart';
@@ -17,7 +17,7 @@ import 'add_item_view_model.dart';
 
 @RoutePage(params: [RouteParameter("model")])
 class AddItemScreen extends StatefulWidget {
-  TodoModel model;
+  TodoResponse model;
   bool statusEdit = false;
 
   AddItemScreen({this.model}) : super();
@@ -88,7 +88,7 @@ class _AddItemScreenState extends BaseScreen<AddItemScreen> {
       {TextInputType type, bool enable = false, Function(String) onValue}) {
     return Padding(
       padding: const EdgeInsets.all(16),
-      child: TextFormField(
+      child: TextField(
         controller: controller,
         readOnly: enable ?? false,
         keyboardType: type,
@@ -97,6 +97,7 @@ class _AddItemScreenState extends BaseScreen<AddItemScreen> {
           onValue(value);
         },
         decoration: InputDecoration(
+          // counterText: "",
           border: OutlineInputBorder(),
           contentPadding: EdgeInsets.all(8),
           suffixIcon: Visibility(
@@ -142,11 +143,11 @@ class _AddItemScreenState extends BaseScreen<AddItemScreen> {
     );
   }
 
-  _insertToDataBase(TodoModel model) async {
+  _insertToDataBase(TodoResponse model) async {
     var result = widget.statusEdit
         ? await addItemViewModel.addItemTodo(model)
         : await addItemViewModel.editItemTodo(model);
-    if (result != 0) {
+    if (result != -1) {
       Fluttertoast.showToast(
           msg: getString(
               context,
@@ -156,6 +157,7 @@ class _AddItemScreenState extends BaseScreen<AddItemScreen> {
       Timer(Duration(seconds: 1), () {
         popToScreen(context, result);
       });
-    }
+    } else
+      Fluttertoast.showToast(msg: "Input name");
   }
 }

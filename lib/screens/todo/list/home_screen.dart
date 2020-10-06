@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_to_do/@core/constants.dart';
 import 'package:flutter_to_do/@core/dependency_injection.dart';
-import 'package:flutter_to_do/@core/repo/todo/to_do_model.dart';
+import 'package:flutter_to_do/@core/repo/todo/to_do_response.dart';
 import 'package:flutter_to_do/@shared/utils/utils.dart';
 import 'package:flutter_to_do/resources/localization/langs.dart';
 import 'package:flutter_to_do/resources/styles/colors.dart';
@@ -55,7 +55,7 @@ class _HomeScreenState extends BaseScreen<HomeScreen> {
     );
   }
 
-  Widget _itemListTodo(List<TodoModel> list) {
+  Widget _itemListTodo(List<TodoResponse> list) {
     return SingleChildScrollView(
       child: Container(
         width: getWidthPercen(context, 100),
@@ -79,7 +79,7 @@ class _HomeScreenState extends BaseScreen<HomeScreen> {
       label: Text(
           title.isNotEmpty ? getString(context, title).toUpperCase() : ""));
 
-  _getListRow(List<TodoModel> list) => list
+  _getListRow(List<TodoResponse> list) => list
       .map((e) => DataRow(onSelectChanged: (val) => _showDialog(e), cells: [
             DataCell(
               Text("${e.id}"),
@@ -112,24 +112,24 @@ class _HomeScreenState extends BaseScreen<HomeScreen> {
         color: AppColors.white,
         size: 50,
       ),
-      onPressed: () => _gotoAndGetAction(TodoModel(id: id)),
+      onPressed: () => _gotoAndGetAction(TodoResponse(id: id)),
       // onPressed: () => viewModel.addTodo(),
     );
   }
 
-  _gotoAndGetAction(TodoModel item) async {
+  _gotoAndGetAction(TodoResponse item) async {
     var result =
         await goToScreen(context, AppConstants.ROUTE_ADD_ITEM_SCREEN, item);
     if (result != 0) viewModel.getListTodo();
   }
 
-  _deleteTodo(TodoModel item) async {
+  _deleteTodo(TodoResponse item) async {
     var result = await viewModel.deleteTodo(item);
     if (result != 0)
       Fluttertoast.showToast(msg: getString(context, AppLangs.text_deleted));
   }
 
-  _showDialog(TodoModel item) async {
+  _showDialog(TodoResponse item) async {
     await showDialog(
         context: context,
         barrierDismissible: false,

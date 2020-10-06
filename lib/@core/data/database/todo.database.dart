@@ -1,4 +1,5 @@
-import 'package:flutter_to_do/@core/repo/todo/to_do_model.dart';
+import 'package:flutter_to_do/@core/repo/todo/to_do.repo.dart';
+import 'package:flutter_to_do/@core/repo/todo/to_do_response.dart';
 import 'package:flutter_to_do/@core/services/log.service.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -34,7 +35,7 @@ class DBProvider {
     });
   }
 
-  Future<int> insert(TodoModel todo) async {
+  Future<int> insert(TodoResponse todo) async {
     int count = 0;
     try {
       var db = (await database).batch();
@@ -46,12 +47,12 @@ class DBProvider {
     return count;
   }
 
-  Future<List<TodoModel>> getListTodo() async {
+  Future<List<TodoResponse>> getListTodo() async {
     var db = (await database).batch();
     db.query(_tableTodo);
     List<dynamic> maps = await db.commit();
     if (maps.length > 0) {
-      return TodoModel().getListFromJson(maps.first);
+      return TodoResponse().getListFromJson(maps.first);
     }
     return [];
   }
@@ -62,7 +63,7 @@ class DBProvider {
     return (await db.commit()).length;
   }
 
-  Future<int> update(TodoModel todo) async {
+  Future<int> update(TodoResponse todo) async {
     var db = (await database).batch();
     db.update(_tableTodo, todo.toJson(),
         where: '$_columnId = ?', whereArgs: [todo.id]);

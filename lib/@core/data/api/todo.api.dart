@@ -1,4 +1,4 @@
-import 'package:flutter_to_do/@core/repo/todo/to_do_model.dart';
+import 'package:flutter_to_do/@core/repo/todo/to_do.repo.dart';
 
 // TodoModel
 
