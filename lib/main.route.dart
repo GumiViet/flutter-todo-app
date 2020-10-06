@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_to_do/resources/constants.dart';
-import 'package:flutter_to_do/screen/add/add_item_screen.dart';
-import 'package:flutter_to_do/screen/home/home_screen.dart';
-import 'package:flutter_to_do/screen/splash/splash_screen.dart';
+import 'package:flutter_to_do/@core/constants.dart';
+
+import 'screens/splash/splash_screen.dart';
+import 'screens/todo/add/add_item_screen.dart';
+import 'screens/todo/list/home_screen.dart';
 
 RouteFactory generateRoute = (setting) => Map.fromEntries([
       ...getScreen(AppConstants.ROUTE_SPLASH, SplashScreen()).entries,

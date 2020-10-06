@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_to_do/resources/constants.dart';
+import 'package:flutter_to_do/@core/constants.dart';
 import 'package:flutter_to_do/main.route.dart';
 import 'package:flutter_to_do/resources/localization/app_translations_delegate.dart';
 import 'package:flutter_to_do/resources/localization/application.dart';
-import 'package:flutter_to_do/resources/styles.dart';
-import 'package:flutter_to_do/screen/splash/splash_view_model.dart';
+import 'package:flutter_to_do/resources/styles/styles.dart';
+import 'package:flutter_to_do/screens/splash/splash_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:route_annotation/route_annotation.dart';
 
-import 'dependency_injection/dependency_injection.dart';
+import '@core/dependency_injection.dart';
 
 void main() async => {
       initInject(),
@@ -36,8 +36,7 @@ class _MyAppState extends State<MyApp> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    _newLocaleDelegate =
-        AppTranslationsDelegate(newLocale: Locale("jp", "Japan"));
+    _newLocaleDelegate = AppTranslationsDelegate(newLocale: Locale(AppConstants.JA_CODE,""));
     application.onLocaleChanged = onLocaleChange;
   }
 
@@ -61,8 +60,8 @@ class _MyAppState extends State<MyApp> {
             GlobalCupertinoLocalizations.delegate,
           ],
           supportedLocales: [
-            const Locale("jp", ""),
-            const Locale("en", ""),
+            const Locale(AppConstants.JA_CODE, ""),
+            const Locale(AppConstants.EN_CODE, ""),
           ]),
     );
   }

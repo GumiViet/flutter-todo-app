@@ -1,9 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_to_do/@core/constants.dart';
 import 'package:flutter_to_do/resources/localization/app_translations_delegate.dart';
-
-const JP_CODE = 'jp';
-const EN_CODE = 'en';
 
 class Application {
   static final Application _application = Application._internal();
@@ -17,13 +15,13 @@ class Application {
   GlobalKey<NavigatorState> _navigatorKey;
 
   final List<String> supportedLanguages = [
-    "Japan",
+    "Japanese",
     "English",
   ];
 
   final List<String> supportedLanguagesCodes = [
-    JP_CODE,
-    EN_CODE,
+    AppConstants.JA_CODE,
+    AppConstants.EN_CODE,
   ];
 
   //returns the list of supported Locales
@@ -52,5 +50,5 @@ String langCode;
 typedef void LocaleChangeCallback(Locale locale);
 
 Future<void> initLangCode() async {
-  langCode = JP_CODE;
+  langCode = AppConstants.JA_CODE;
 }
