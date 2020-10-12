@@ -1,4 +1,4 @@
-import 'package:flutter_to_do/screens/splash/splash_view_model.dart';
+import 'package:flutter_to_do/screens/splash/splash.view_model.dart';
 import 'package:flutter_to_do/screens/todo/add/add_item_view_model.dart';
 import 'package:flutter_to_do/screens/todo/list/home_view_model.dart';
 import 'package:get_it/get_it.dart';

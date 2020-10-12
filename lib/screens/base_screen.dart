@@ -3,8 +3,13 @@ import 'package:flutter_to_do/@shared/utils/utils.dart';
 import 'package:flutter_to_do/resources/styles/colors.dart';
 
 abstract class BaseScreen<T extends StatefulWidget> extends State<T> {
-
   String getStringById(String key) => getString(context, key);
+
+  double getHeightWithPercent(int per) =>
+      (MediaQuery.of(context).size.height / 100) * per;
+
+  double getWidthWithPercent(int per) =>
+      (MediaQuery.of(context).size.width /  100) * per;
 
   Widget baseScaffold(
       {String myTitle,
@@ -28,6 +33,4 @@ abstract class BaseScreen<T extends StatefulWidget> extends State<T> {
       floatingActionButton: floatButton,
     );
   }
-
-
 }

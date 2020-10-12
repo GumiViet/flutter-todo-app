@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_to_do/@shared/utils/utils.dart';
 import 'package:flutter_to_do/@core/dependency_injection.dart';
-import 'package:flutter_to_do/resources/styles/colors.dart';
+import 'package:flutter_to_do/resources/localization/langs.dart';
 import 'package:flutter_to_do/@core/constants.dart';
+import 'package:flutter_to_do/resources/styles/styles.dart';
 import 'package:flutter_to_do/screens/base_screen.dart';
-import 'package:flutter_to_do/screens/splash/splash_view_model.dart';
+import 'package:flutter_to_do/screens/splash/splash.view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:route_annotation/route_annotation.dart';
 
@@ -22,7 +22,6 @@ class _SplashScreenState extends BaseScreen<SplashScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     loadData();
   }
@@ -33,17 +32,21 @@ class _SplashScreenState extends BaseScreen<SplashScreen> {
       create: (context) => viewModel,
       child: Consumer<SplashViewModel>(builder: (context, viewModel, child) {
         return baseScaffold(
-            myBody: SpinKitDoubleBounce(
-          color: AppColors.mainColor,
-          size: 50,
+            myBody: Container(
+          child: Center(
+            child: Text(
+              getStringById(AppLangs.text_app_name),
+              style: AppStyles().blackRegular(70),
+            ),
+          ),
         ));
       }),
     );
   }
 
   void loadData() async {
-    Timer(Duration(milliseconds: 500), () {
-      goToAndRemoveScreen(context, AppConstants.ROUTE_HOME_SCREEN);
+    Timer(Duration(milliseconds: 1500), () {
+      goToAndRemoveScreen(context, AppConstants.ROUTE_TUTORIAL_SCREEN);
     });
   }
 }

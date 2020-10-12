@@ -5,7 +5,7 @@ import 'package:flutter_to_do/main.route.dart';
 import 'package:flutter_to_do/resources/localization/app_translations_delegate.dart';
 import 'package:flutter_to_do/resources/localization/application.dart';
 import 'package:flutter_to_do/resources/styles/styles.dart';
-import 'package:flutter_to_do/screens/splash/splash_view_model.dart';
+import 'package:flutter_to_do/screens/splash/splash.view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:route_annotation/route_annotation.dart';
@@ -51,7 +51,8 @@ class _MyAppState extends State<MyApp> {
           theme: AppStyles.mainTheme,
           key: myKey,
           navigatorKey: application.getNavigatorKey(isGenNewKey: true),
-          initialRoute: AppConstants.ROUTE_SPLASH,
+          initialRoute: AppConstants.ROUTE_HOME_SCREEN,
+          // initialRoute: AppConstants.ROUTE_SPLASH,
           onGenerateRoute: generateRoute,
           localizationsDelegates: [
             _newLocaleDelegate,

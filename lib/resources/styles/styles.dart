@@ -35,4 +35,11 @@ class AppStyles {
       fontSize: size,
     );
   }
+
+  TextStyle blackRegular(double size) {
+    return TextStyle(
+      fontSize: size,
+      color: AppColors.black,
+    );
+  }
 }

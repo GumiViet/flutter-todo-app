@@ -1,4 +1,7 @@
 class AppLangs {
+  static const text_app_name = "text_app_name";
+
+
   static const text_title_home = "text_title_home";
   static const text_no_data = "text_no_data";
   static const text_id = "text_id";
