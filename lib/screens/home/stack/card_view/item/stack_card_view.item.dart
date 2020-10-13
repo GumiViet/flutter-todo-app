@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_to_do/@core/enums.dart';
+import 'package:flutter_to_do/@core/services/log.service.dart';
 import 'package:flutter_to_do/screens/home/stack/card/stack_card.dart';
 import 'package:flutter_to_do/screens/home/stack/card_view/content/stack_card_view.item.content.dart';
 import 'package:fluttery_dart2/layout.dart';
@@ -41,7 +42,7 @@ class _StackedCardViewItemState extends State<StackedCardViewItem>
   AnimationController slideBackAnimation;
   AnimationController slideOutAnimation;
   Tween<Offset> slideOutTween;
-  SlideDirection slideOutDirection;
+  SlideDirection slideOutDirection = SlideDirection.Up;
 
   @override
   void initState() {
@@ -49,14 +50,17 @@ class _StackedCardViewItemState extends State<StackedCardViewItem>
 
     slideBackAnimation = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 500),
     )
       ..addListener(() => setState(() {
             containerOffset = Offset.lerp(
                 slideBackStartPosition,
                 const Offset(0.0, 0.0),
                 Curves.elasticOut.transform(slideBackAnimation.value));
-            if (widget.onSlideUpdate != null) {
+            if (widget.onSlideUpdate != null &&
+                slideOutDirection == SlideDirection.Up) {
+              if (containerOffset.distance == 1)
+                print("addListener - ${containerOffset.distance}");
               widget.onSlideUpdate(
                   containerOffset.distance, widget.handleLeftRight);
             }
@@ -64,6 +68,7 @@ class _StackedCardViewItemState extends State<StackedCardViewItem>
       ..addStatusListener((AnimationStatus status) {
         if (status == AnimationStatus.completed) {
           setState(() {
+            print("addListener - ${containerOffset.distance}");
             dragStartPosition = null;
             dragCurrentPosition = null;
             slideBackStartPosition = null;
@@ -71,7 +76,7 @@ class _StackedCardViewItemState extends State<StackedCardViewItem>
         }
       });
 
-    slideOutAnimation = new AnimationController(
+    slideOutAnimation = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 500),
     )
@@ -88,80 +93,17 @@ class _StackedCardViewItemState extends State<StackedCardViewItem>
             dragStartPosition = null;
             dragCurrentPosition = null;
             slideOutTween = null;
-            if (widget.onSlideComplete != null) {
+            if (widget.onSlideComplete != null)
               widget.onSlideComplete(slideOutDirection);
-            }
           });
         }
       });
-
-    if (widget.isDraggable) {
-      widget.card.addListener(_slideFromExternal);
-    }
-  }
-
-  void _slideFromExternal() {
-    switch (widget.card.direction) {
-      case SlideDirection.Left:
-        _slideLeft();
-        break;
-      case SlideDirection.Right:
-        _slideRight();
-        break;
-      case SlideDirection.Up:
-        _slideUp();
-        break;
-    }
-  }
-
-  void _slideLeft() {
-    if (slideOutAnimation.isAnimating) return;
-    final screenSize = MediaQuery.of(context).size;
-    dragStartPosition = _randomDragStartPosition();
-    slideOutTween = Tween(
-        begin: const Offset(0.0, 0.0), end: Offset(screenSize.width * -2, 0.0));
-    slideOutAnimation.forward(from: 0.0);
-    slideOutDirection = SlideDirection.Left;
-  }
-
-  void _slideRight() {
-    if (slideOutAnimation.isAnimating) return;
-    final screenSize = MediaQuery.of(context).size;
-    dragStartPosition = _randomDragStartPosition();
-    slideOutTween = Tween(
-        begin: const Offset(0.0, 0.0), end: Offset(screenSize.width * 2, 0.0));
-    slideOutAnimation.forward(from: 0.0);
-    slideOutDirection = SlideDirection.Right;
-  }
-
-  void _slideUp() {
-    if (slideOutAnimation.isAnimating) return;
-    final screenSize = MediaQuery.of(context).size;
-    dragStartPosition = _randomDragStartPosition();
-    slideOutTween = Tween(
-        begin: const Offset(0.0, 0.0),
-        end: Offset(0.0, screenSize.height * -2));
-    slideOutAnimation.forward(from: 0.0);
-    slideOutDirection = SlideDirection.Up;
-  }
-
-  Offset _randomDragStartPosition() {
-    final screenSize = MediaQuery.of(context).size;
-    final itemContext = itemKey.currentContext;
-    final itemTopLeft = (itemContext.findRenderObject() as RenderBox)
-        .localToGlobal(const Offset(0.0, 0.0));
-    final dragStartY =
-        screenSize.height * (Random().nextDouble() < 0.5 ? 0.25 : 0.75) +
-            itemTopLeft.dy;
-    final dragStartX = screenSize.width / 2 + itemTopLeft.dx;
-    return Offset(dragStartX, dragStartY);
   }
 
   @override
   void dispose() {
     slideBackAnimation.dispose();
     slideOutAnimation.dispose();
-    widget.card.removeListener(_slideFromExternal);
     super.dispose();
   }
 
@@ -188,17 +130,23 @@ class _StackedCardViewItemState extends State<StackedCardViewItem>
     final isInLeftRegion = (containerOffset.dx / context.size.width) < -0.45;
     final isInRightRegion = (containerOffset.dx / context.size.width) > 0.45;
     setState(() {
-      if ((isInLeftRegion || isInRightRegion) && widget.statusComplete) {
-        slideOutTween = Tween(
-            begin: containerOffset, end: dragVector * (2 * context.size.width));
-        slideOutAnimation.forward(from: 0.0);
-        slideOutDirection =
-            isInLeftRegion ? SlideDirection.Left : SlideDirection.Right;
-      } else {
-        slideBackStartPosition = containerOffset;
-        slideBackAnimation.forward(from: 0.0);
-      }
-      widget.onSlideUpdate(containerOffset.distance, widget.handleLeftRight);
+      // if ((isInLeftRegion || isInRightRegion) && widget.statusComplete) {
+      //   slideOutTween = Tween(
+      //       end: containerOffset, begin: dragVector * (2 * context.size.width));
+      //   slideOutAnimation.forward(from: 0.0);
+      //   slideOutDirection =
+      //       isInLeftRegion ? SlideDirection.Left : SlideDirection.Right;
+      // } else {
+      //   slideBackStartPosition = containerOffset;
+      //   slideBackAnimation.forward(from: 0.0);
+      // }
+      slideOutDirection = isInLeftRegion || isInRightRegion
+          ? isInLeftRegion
+              ? SlideDirection.Left
+              : SlideDirection.Right
+          : SlideDirection.Up;
+      slideBackStartPosition = containerOffset;
+      slideBackAnimation.forward(from: 0.0);
     });
   }
 

@@ -2,10 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_to_do/@core/dependency_injection.dart';
 import 'package:flutter_to_do/@core/enums.dart';
+import 'package:flutter_to_do/@core/services/log.service.dart';
 import 'package:flutter_to_do/resources/styles/images.dart';
 import 'package:flutter_to_do/screens/base_screen.dart';
 import 'package:flutter_to_do/screens/home/stack/card_set/stack_card_set.dart';
-import 'package:flutter_to_do/screens/home/stack/card_view/item/stack_card_view.view_model.dart';
+import 'package:flutter_to_do/screens/home/stack/card_view/stack_card_view.view_model.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
@@ -44,13 +45,20 @@ class _StackedCardViewState extends BaseScreen<StackedCardView> {
                         ? ((viewModel.distance - 0.8) * 5 * 60) - 60
                         : -60,
                     50),
-                child:
-                    // Image(image: AssetImage(AppImages.icAccept), height: 55),
-                    Image(
-                        image: AssetImage(AppImages.icAccept),
-                        height: viewModel.draggable > 0
-                            ? (viewModel.distance - 0.8) * 5 * 45
-                            : 0),
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      widget.cardSet.incrementCardIndex();
+                      _setItemKey();
+                      viewModel.clearSlide();
+                    });
+                  },
+                  child: Image(
+                      image: AssetImage(AppImages.icAccept),
+                      height: viewModel.draggable > 0
+                          ? (viewModel.distance - 0.8) * 5 * 45
+                          : 0),
+                ),
               ),
               Expanded(
                 child: Stack(
@@ -66,44 +74,23 @@ class _StackedCardViewState extends BaseScreen<StackedCardView> {
                         ? 60 - ((viewModel.distance - 0.8) * 5 * 60)
                         : 60,
                     50),
-                child:
-                    // Image(image: AssetImage(AppImages.icRemove), height: 55),
-                    Image(
-                        image: AssetImage(AppImages.icRemove),
-                        height: viewModel.draggable < 0
-                            ? (viewModel.distance - 0.8) * 5 * 45
-                            : 0),
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      widget.cardSet.incrementCardIndex();
+                      _setItemKey();
+                      viewModel.clearSlide();
+                    });
+                  },
+                  child: Image(
+                      image: AssetImage(AppImages.icRemove),
+                      height: viewModel.draggable < 0
+                          ? (viewModel.distance - 0.8) * 5 * 45
+                          : 0),
+                ),
               ),
             ],
           );
-          // return Row(
-          //   children: [
-          //     Transform.translate(
-          //       offset: Offset(
-          //           viewModel.draggable > 0
-          //               ? -60 + ((viewModel.distance - 0.8) * 5 * 60)
-          //               : -60,
-          //           50),
-          //       child: Image(image: AssetImage(AppImages.icAccept), height: 45),
-          //     ),
-          //     Expanded(
-          //       child: Stack(
-          //         children: <Widget>[
-          //           _buildBackItem(viewModel.distance),
-          //           _buildFrontItem(),
-          //         ],
-          //       ),
-          //     ),
-          //     Transform.translate(
-          //       offset: Offset(
-          //           viewModel.draggable < 0
-          //               ? 60 - ((viewModel.distance - 0.8) * 5 * 60)
-          //               : 60,
-          //           50),
-          //       child: Image(image: AssetImage(AppImages.icRemove), height: 45),
-          //     ),
-          //   ],
-          // );
         },
       ),
     );
@@ -118,22 +105,20 @@ class _StackedCardViewState extends BaseScreen<StackedCardView> {
   }
 
   void _onSlideComplete(SlideDirection direction) {
-    switch (direction) {
-      case SlideDirection.Left:
-        Fluttertoast.showToast(msg: "Swipe remove");
-        break;
-      case SlideDirection.Right:
-        Fluttertoast.showToast(msg: "Swipe accept");
-        break;
-      case SlideDirection.Up:
-        // TODO: Handle this case.
-        break;
-    }
-    viewModel.setDistanceAndDraggable(0.0, 0.0);
-    setState(() {
-      widget.cardSet.incrementCardIndex();
-      _setItemKey();
-    });
+    // switch (direction) {
+    //   case SlideDirection.Left:
+    //     break;
+    //   case SlideDirection.Right:
+    //     break;
+    //   case SlideDirection.Up:
+    //     // TODO: Handle this case.
+    //     break;
+    // }
+    // viewModel.setDistanceAndDraggable(0.0, 0.0);
+    // setState(() {
+    //   widget.cardSet.incrementCardIndex();
+    //   _setItemKey();
+    // });
   }
 
   Widget _buildBackItem(double distance) {

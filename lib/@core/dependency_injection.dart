@@ -1,4 +1,4 @@
-import 'package:flutter_to_do/screens/home/stack/card_view/item/stack_card_view.view_model.dart';
+import 'package:flutter_to_do/screens/home/stack/card_view/stack_card_view.view_model.dart';
 import 'package:flutter_to_do/screens/splash/splash.view_model.dart';
 import 'package:get_it/get_it.dart';
 

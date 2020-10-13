@@ -10,17 +10,13 @@ class StackCardViewViewModel extends ViewStateModel {
 
   double get distance => _distance;
 
-  set distance(val) {
-    _distance = val;
-    notifyListeners();
-  }
-
   double _draggable = 0.0;
 
   double get draggable => _draggable;
 
-  set draggable(val) {
-    _draggable = val;
+  void clearSlide() {
+    _distance = 0.0;
+    _draggable = 0.0;
     notifyListeners();
   }
 
