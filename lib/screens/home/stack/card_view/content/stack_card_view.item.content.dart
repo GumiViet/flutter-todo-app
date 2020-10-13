@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_to_do/resources/styles/colors.dart';
 import 'package:flutter_to_do/screens/home/stack/card/stack_card.dart';
 import 'package:flutter_to_do/screens/home/stack/photo/photo.view.dart';
 
@@ -12,19 +13,21 @@ class StackedCardViewItemContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return card != null ? getChild() : Container();
+    return card != null ? Scaffold(body: getChild(context)) : Container();
   }
 
-  Widget getChild() {
+  Widget getChild(BuildContext context) {
     return Container(
-      decoration:
-          BoxDecoration(borderRadius: BorderRadius.circular(10.0), boxShadow: [
-        BoxShadow(
-          color: Colors.black12,
-          blurRadius: 5.0,
-          spreadRadius: 2.0,
-        )
-      ]),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 5.0,
+              spreadRadius: 2.0,
+            )
+          ]
+      ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10.0),
         child: Material(
@@ -38,6 +41,42 @@ class StackedCardViewItemContent extends StatelessWidget {
         ),
       ),
     );
+    // return SingleChildScrollView(
+    //   child: Container(
+    //     height: MediaQuery.of(context).size.height,
+    //     decoration: BoxDecoration(color: AppColors.black, boxShadow: [
+    //       BoxShadow(
+    //         color: Colors.black12,
+    //         blurRadius: 5.0,
+    //         spreadRadius: 2.0,
+    //       )
+    //     ]),
+    //     child: Stack(
+    //       children: [
+    //         ClipRRect(
+    //           borderRadius: BorderRadius.circular(10.0),
+    //           child: _buildBackground(),
+    //         ),
+    //         Align(alignment: Alignment.bottomRight, child: Padding(
+    //           padding: const EdgeInsets.only(bottom: 50),
+    //           child: _buildProfile(),
+    //         ),),
+    //       ],
+    //     ),
+        // child: Column(
+        //   children: [
+        //     SizedBox(
+        //       height: MediaQuery.of(context).size.height * 0.4,
+        //       child: ClipRRect(
+        //         borderRadius: BorderRadius.circular(10.0),
+        //         child: _buildBackground(),
+        //       ),
+        //     ),
+        //     _buildProfile(),
+        //   ],
+        // ),
+    //   ),
+    // );
   }
 
   Widget _buildBackground() {
@@ -48,41 +87,28 @@ class StackedCardViewItemContent extends StatelessWidget {
   }
 
   Widget _buildProfile() {
-    return Positioned(
-      left: 0.0,
-      right: 0.0,
-      bottom: 0.0,
-      child: Container(
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-              Colors.transparent,
-              Colors.black.withOpacity(0.8),
-            ])),
-        padding: const EdgeInsets.all(24.0),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Text(card.title,
-                      style: TextStyle(color: Colors.white, fontSize: 24.0)),
-                  Text(card.subTitle,
-                      style: TextStyle(color: Colors.white, fontSize: 18.0))
-                ],
-              ),
+    return Container(
+      padding: const EdgeInsets.all(24.0),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text(card.title,
+                    style: TextStyle(color: Colors.white, fontSize: 24.0)),
+                Text(card.subTitle,
+                    style: TextStyle(color: Colors.white, fontSize: 18.0))
+              ],
             ),
-            Icon(
-              Icons.info,
-              color: Colors.white,
-            )
-          ],
-        ),
+          ),
+          Icon(
+            Icons.info,
+            color: Colors.white,
+          )
+        ],
       ),
     );
   }

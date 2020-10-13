@@ -13,49 +13,49 @@ class HomeScreen extends StatefulWidget {
 var cardSet = StackedCardSet(cards: [
   StackedCard(
     photos: [
-      AppImages.img_demo_1,
+      AppImages.imgDemo_1,
     ],
     title: 'Your Name 1',
     subTitle: 'And Biography 1',
   ),
   StackedCard(
     photos: [
-      AppImages.img_demo_2,
+      AppImages.imgDemo_2,
     ],
     title: 'Your Name 2',
     subTitle: 'And Biography 2',
   ),
   StackedCard(
     photos: [
-      AppImages.img_demo_3,
+      AppImages.imgDemo_3,
     ],
     title: 'Your Name 3',
     subTitle: 'And Biography 3',
   ),
   StackedCard(
     photos: [
-      AppImages.img_demo_4,
+      AppImages.imgDemo_4,
     ],
     title: 'Your Name 4',
     subTitle: 'And Biography 4',
   ),
   StackedCard(
     photos: [
-      AppImages.img_demo_5,
+      AppImages.imgDemo_5,
     ],
     title: 'Your Name 5',
     subTitle: 'And Biography 5',
   ),
   StackedCard(
     photos: [
-      AppImages.img_demo_6,
+      AppImages.imgDemo_6,
     ],
     title: 'Your Name 6',
     subTitle: 'And Biography 6',
   ),
   StackedCard(
     photos: [
-      AppImages.img_demo_7,
+      AppImages.imgDemo_7,
     ],
     title: 'Your Name 7',
     subTitle: 'And Biography 7',
@@ -66,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(24),
+      margin: const EdgeInsets.symmetric(vertical: 24, horizontal: 8),
       child: StackedCardView(
         cardSet: cardSet,
       ),

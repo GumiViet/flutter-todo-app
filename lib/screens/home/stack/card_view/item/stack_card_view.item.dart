@@ -9,10 +9,11 @@ import 'package:fluttery_dart2/layout.dart';
 class StackedCardViewItem extends StatefulWidget {
   final bool isDraggable;
   final StackedCard card;
-  final Function(double) onSlideUpdate;
+  final Function(double, double) onSlideUpdate;
   final Function(SlideDirection) onSlideComplete;
   final double scale;
   final bool statusComplete;
+  double handleLeftRight;
 
   StackedCardViewItem({
     Key key,
@@ -56,7 +57,8 @@ class _StackedCardViewItemState extends State<StackedCardViewItem>
                 const Offset(0.0, 0.0),
                 Curves.elasticOut.transform(slideBackAnimation.value));
             if (widget.onSlideUpdate != null) {
-              widget.onSlideUpdate(containerOffset.distance);
+              widget.onSlideUpdate(
+                  containerOffset.distance, widget.handleLeftRight);
             }
           }))
       ..addStatusListener((AnimationStatus status) {
@@ -76,7 +78,8 @@ class _StackedCardViewItemState extends State<StackedCardViewItem>
       ..addListener(() => setState(() {
             containerOffset = slideOutTween.evaluate(slideOutAnimation);
             if (widget.onSlideUpdate != null) {
-              widget.onSlideUpdate(containerOffset.distance);
+              widget.onSlideUpdate(
+                  containerOffset.distance, widget.handleLeftRight);
             }
           }))
       ..addStatusListener((AnimationStatus status) {
@@ -112,9 +115,7 @@ class _StackedCardViewItemState extends State<StackedCardViewItem>
   }
 
   void _slideLeft() {
-    if (slideOutAnimation.isAnimating) {
-      return;
-    }
+    if (slideOutAnimation.isAnimating) return;
     final screenSize = MediaQuery.of(context).size;
     dragStartPosition = _randomDragStartPosition();
     slideOutTween = Tween(
@@ -123,12 +124,8 @@ class _StackedCardViewItemState extends State<StackedCardViewItem>
     slideOutDirection = SlideDirection.Left;
   }
 
-  /// 右にスワイプされた際の処理です
   void _slideRight() {
-    if (slideOutAnimation.isAnimating) {
-      return;
-    }
-
+    if (slideOutAnimation.isAnimating) return;
     final screenSize = MediaQuery.of(context).size;
     dragStartPosition = _randomDragStartPosition();
     slideOutTween = Tween(
@@ -138,10 +135,7 @@ class _StackedCardViewItemState extends State<StackedCardViewItem>
   }
 
   void _slideUp() {
-    if (slideOutAnimation.isAnimating) {
-      return;
-    }
-
+    if (slideOutAnimation.isAnimating) return;
     final screenSize = MediaQuery.of(context).size;
     dragStartPosition = _randomDragStartPosition();
     slideOutTween = Tween(
@@ -153,7 +147,6 @@ class _StackedCardViewItemState extends State<StackedCardViewItem>
 
   Offset _randomDragStartPosition() {
     final screenSize = MediaQuery.of(context).size;
-
     final itemContext = itemKey.currentContext;
     final itemTopLeft = (itemContext.findRenderObject() as RenderBox)
         .localToGlobal(const Offset(0.0, 0.0));
@@ -161,7 +154,6 @@ class _StackedCardViewItemState extends State<StackedCardViewItem>
         screenSize.height * (Random().nextDouble() < 0.5 ? 0.25 : 0.75) +
             itemTopLeft.dy;
     final dragStartX = screenSize.width / 2 + itemTopLeft.dx;
-
     return Offset(dragStartX, dragStartY);
   }
 
@@ -169,47 +161,32 @@ class _StackedCardViewItemState extends State<StackedCardViewItem>
   void dispose() {
     slideBackAnimation.dispose();
     slideOutAnimation.dispose();
-
     widget.card.removeListener(_slideFromExternal);
-
     super.dispose();
   }
 
   void _onPanStart(DragStartDetails details) {
-    if (!widget.isDraggable) {
-      return;
-    }
-
+    if (!widget.isDraggable) return;
     dragStartPosition = details.globalPosition;
-
-    if (slideBackAnimation.isAnimating) {
-      slideBackAnimation.stop();
-    }
+    if (slideBackAnimation.isAnimating) slideBackAnimation.stop();
   }
 
   void _onPanUpdate(DragUpdateDetails details) {
-    if (!widget.isDraggable) {
-      return;
-    }
-
+    widget.handleLeftRight = containerOffset.dx / context.size.width;
+    if (!widget.isDraggable) return;
     setState(() {
       dragCurrentPosition = details.globalPosition;
       containerOffset = dragCurrentPosition - dragStartPosition;
-      if (widget.onSlideUpdate != null) {
-        widget.onSlideUpdate(containerOffset.distance);
-      }
+      if (widget.onSlideUpdate != null)
+        widget.onSlideUpdate(containerOffset.distance, widget.handleLeftRight);
     });
   }
 
   void _onPanEnd(DragEndDetails details) {
-    if (!widget.isDraggable) {
-      return;
-    }
-
+    if (!widget.isDraggable) return;
     final dragVector = containerOffset / containerOffset.distance;
     final isInLeftRegion = (containerOffset.dx / context.size.width) < -0.45;
     final isInRightRegion = (containerOffset.dx / context.size.width) > 0.45;
-
     setState(() {
       if ((isInLeftRegion || isInRightRegion) && widget.statusComplete) {
         slideOutTween = Tween(
@@ -221,6 +198,7 @@ class _StackedCardViewItemState extends State<StackedCardViewItem>
         slideBackStartPosition = containerOffset;
         slideBackAnimation.forward(from: 0.0);
       }
+      widget.onSlideUpdate(containerOffset.distance, widget.handleLeftRight);
     });
   }
 

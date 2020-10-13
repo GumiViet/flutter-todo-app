@@ -8,8 +8,8 @@ class AppStyles {
   static var mainTheme = ThemeData(
     primaryColor: AppColors.mainColor,
     accentColor: AppColors.mainColor,
-    scaffoldBackgroundColor: AppColors.appScreenBackground,
     platform: TargetPlatform.iOS,
+    scaffoldBackgroundColor: AppColors.white,
     bottomSheetTheme: BottomSheetThemeData(
       backgroundColor: Colors.white,
       elevation: 4,
@@ -24,7 +24,7 @@ class AppStyles {
 
   TextStyle grayBold(double size) {
     return TextStyle(
-        color: AppColors.grayMedium,
+        color: AppColors.lightGray,
         fontSize: size,
         fontFamily: AppFonts.typeBold);
   }
