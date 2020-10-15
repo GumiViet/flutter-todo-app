@@ -1,5 +1,7 @@
+import 'package:flutter_to_do/screens/home/home.view_model.dart';
 import 'package:flutter_to_do/screens/home/stack/card_view/stack_card_view.view_model.dart';
 import 'package:flutter_to_do/screens/splash/splash.view_model.dart';
+import 'package:flutter_to_do/screens/tutorial/tutorial.view_model.dart';
 import 'package:get_it/get_it.dart';
 
 import 'data/database/todo.database.dart';
@@ -11,4 +13,7 @@ void initInject() {
       .registerFactory<StackCardViewViewModel>(() => StackCardViewViewModel());
   byInject.registerLazySingleton<DBProvider>(() => DBProvider());
   byInject.registerFactory<SplashViewModel>(() => SplashViewModel());
+  byInject.registerFactory<TutorialViewModel>(() => TutorialViewModel());
+  byInject.registerFactory<HomeViewModel>(() => HomeViewModel());
+
 }

@@ -33,65 +33,100 @@ class _StackedCardViewState extends BaseScreen<StackedCardView> {
 
   @override
   Widget build(BuildContext context) {
+    var defaultSizeSwipe = getWidthWithPercent(15);
     return ChangeNotifierProvider(
       create: (context) => viewModel,
       child: Consumer<StackCardViewViewModel>(
         builder: (context, viewModel, child) {
-          return Row(
-            children: [
-              Transform.translate(
-                offset: Offset(
-                    viewModel.draggable > 0
-                        ? ((viewModel.distance - 0.8) * 5 * 60) - 60
-                        : -60,
-                    50),
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      widget.cardSet.incrementCardIndex();
-                      _setItemKey();
-                      viewModel.clearSlide();
-                    });
-                  },
-                  child: Image(
-                      image: AssetImage(AppImages.icAccept),
-                      height: viewModel.draggable > 0
-                          ? (viewModel.distance - 0.8) * 5 * 45
-                          : 0),
+          return Container(
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                _buttonAccept(
+                    viewModel.distance, viewModel.draggable, defaultSizeSwipe),
+                Expanded(
+                  child: _imageCenter(viewModel.distance, viewModel.draggable,
+                      defaultSizeSwipe),
                 ),
-              ),
-              Expanded(
-                child: Stack(
-                  children: <Widget>[
-                    _buildBackItem(viewModel.distance),
-                    _buildFrontItem(),
-                  ],
-                ),
-              ),
-              Transform.translate(
-                offset: Offset(
-                    viewModel.draggable < 0
-                        ? 60 - ((viewModel.distance - 0.8) * 5 * 60)
-                        : 60,
-                    50),
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      widget.cardSet.incrementCardIndex();
-                      _setItemKey();
-                      viewModel.clearSlide();
-                    });
-                  },
-                  child: Image(
-                      image: AssetImage(AppImages.icRemove),
-                      height: viewModel.draggable < 0
-                          ? (viewModel.distance - 0.8) * 5 * 45
-                          : 0),
-                ),
-              ),
-            ],
+                _buttonRemove(
+                    viewModel.distance, viewModel.draggable, defaultSizeSwipe),
+              ],
+            ),
           );
         },
+      ),
+    );
+  }
+
+  Widget _imageCenter(
+      double distance, double draggable, double defaultSizeSwipe) {
+    return Transform.translate(
+      offset: Offset(
+          distance == 0
+              ? 0
+              : draggable > 0
+                  ? (distance - 0.8) * 5 * defaultSizeSwipe
+                  : -((distance - 0.8) * 5 * defaultSizeSwipe),
+          0),
+      child: Stack(
+        children: <Widget>[
+          _buildBackItem(distance),
+          _buildFrontItem(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buttonAccept(
+      double distance, double draggable, double defaultSizeSwipe) {
+    return Transform.translate(
+      offset: Offset(
+          draggable > 0
+              ? ((distance - 0.8) * 5 * defaultSizeSwipe) - defaultSizeSwipe
+              : -defaultSizeSwipe,
+          50),
+      child: GestureDetector(
+        onTap: () {
+          setState(() {
+            widget.cardSet.incrementCardIndex();
+            _setItemKey();
+            viewModel.clearSlide();
+          });
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Image(
+              image: AssetImage(AppImages.icAccept),
+              height:
+                  draggable > 0 ? (distance - 0.8) * 5 * defaultSizeSwipe : 0),
+        ),
+      ),
+    );
+  }
+
+  Widget _buttonRemove(
+      double distance, double draggable, double defaultSizeSwipe) {
+    return Transform.translate(
+      offset: Offset(
+          draggable < 0
+              ? defaultSizeSwipe - ((distance - 0.8) * 5 * defaultSizeSwipe)
+              : defaultSizeSwipe,
+          50),
+      child: GestureDetector(
+        onTap: () {
+          setState(() {
+            widget.cardSet.incrementCardIndex();
+            _setItemKey();
+            viewModel.clearSlide();
+          });
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Image(
+              image: AssetImage(AppImages.icRemove),
+              height:
+                  draggable < 0 ? (distance - 0.8) * 5 * defaultSizeSwipe : 0),
+        ),
       ),
     );
   }

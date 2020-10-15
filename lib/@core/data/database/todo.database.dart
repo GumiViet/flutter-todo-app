@@ -1,5 +1,5 @@
 import 'package:flutter_to_do/@core/repo/todo/to_do.repo.dart';
-import 'package:flutter_to_do/@core/repo/todo/to_do_response.dart';
+import 'package:flutter_to_do/@core/repo/todo/to_do.model.dart';
 import 'package:flutter_to_do/@core/services/log.service.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';

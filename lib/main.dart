@@ -51,8 +51,8 @@ class _MyAppState extends State<MyApp> {
           theme: AppStyles.mainTheme,
           key: myKey,
           navigatorKey: application.getNavigatorKey(isGenNewKey: true),
-          initialRoute: AppConstants.ROUTE_HOME_SCREEN,
-          // initialRoute: AppConstants.ROUTE_SPLASH,
+          // initialRoute: AppConstants.ROUTE_HOME_SCREEN,
+          initialRoute: AppConstants.ROUTE_SPLASH,
           onGenerateRoute: generateRoute,
           localizationsDelegates: [
             _newLocaleDelegate,

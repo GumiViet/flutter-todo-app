@@ -1,16 +1,7 @@
 {
     "text_app_name": "BizOn!",
-
-
-    "text_title_home": "Home",
-    "text_no_data": "No data!",
-    "text_id": "ID",
-    "text_name": "NAME",
-    "text_value": "VALUE",
-    "text_add_item": "Add Item",
-    "text_edit_item": "Edit Item",
-    "text_delete_item": "Delete Item",
-    "text_added": "Added!!",
-    "text_deleted": "Delete",
-    "text_detail_todo": "Detail Todo"
+    "text_start": "START",
+    "text_title_skip": "スキップ",
+    "text_title_matching": "マッチング候補",
+    "text_title_message": "チャット"
 }

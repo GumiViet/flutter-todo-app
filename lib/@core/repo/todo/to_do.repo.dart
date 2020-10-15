@@ -1,7 +1,7 @@
 import 'package:flutter_to_do/@core/data/api/todo.api.dart';
 import 'package:flutter_to_do/@core/dependency_injection.dart';
-import 'package:flutter_to_do/@core/repo/todo/to_do_request.dart';
-import 'package:flutter_to_do/@core/repo/todo/to_do_response.dart';
+import 'package:flutter_to_do/@core/repo/todo/to_do.request.dart';
+import 'package:flutter_to_do/@core/repo/todo/to_do.model.dart';
 
 import '../base_response.dart';
 

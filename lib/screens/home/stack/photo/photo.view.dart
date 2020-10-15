@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_to_do/@shared/utils/utils.dart';
 import 'package:flutter_to_do/screens/home/stack/photo/photo.indicator.dart';
 
 class PhotoView extends StatefulWidget {
@@ -41,6 +42,8 @@ class _PhotoViewState extends State<PhotoView> {
         ? Image.asset(
             widget.photoAssetPaths[visiblePhotoIndex],
             fit: BoxFit.cover,
+            height: getHeightPercen(context, 100),
+            width: getWidthPercen(context, 100),
           )
         : Container();
   }

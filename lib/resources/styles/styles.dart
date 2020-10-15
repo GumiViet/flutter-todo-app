@@ -42,4 +42,40 @@ class AppStyles {
       color: AppColors.black,
     );
   }
+
+  TextStyle lightGrayRegular(double size) {
+    return TextStyle(
+      fontSize: size,
+      color: AppColors.lightGray,
+    );
+  }
+
+  TextStyle lightBrownRegular(double size) {
+    return TextStyle(
+      fontSize: size,
+      color: AppColors.lightBrown,
+    );
+  }
+
+  TextStyle darkBrownRegular(double size) {
+    return TextStyle(
+      fontSize: size,
+      color: AppColors.darkBrown,
+    );
+  }
+
+  TextStyle colorTextDefaultRegular(double size) {
+    return TextStyle(
+      fontSize: size,
+      color: AppColors.colorTextDefault,
+    );
+  }
+
+  TextStyle colorTextDefaultBold(double size) {
+    return TextStyle(
+      fontSize: size,
+      color: AppColors.colorTextDefault,
+      fontFamily: AppFonts.typeBold,
+    );
+  }
 }

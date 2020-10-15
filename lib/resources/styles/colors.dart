@@ -1,8 +1,8 @@
-
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static var mainColor = HexColor("#ED1C24");
+  static var mainColor = HexColor("#faba1d");
+  static var colorTextDefault = HexColor("#6B6B6B");
   static var white = HexColor('#FFFFFF');
   static var black = HexColor('#000000');
 
@@ -17,7 +17,7 @@ class AppColors {
   static var lightPink = HexColor('#DE446E');
 
   static var lightBlueBlur = HexColor('#B6D5F5');
-  static var lightGrayBlur = HexColor('#E3E3E3');
+  static var lightGrayBlur = HexColor('#A6ACBA');
 
   static var darkBrown = HexColor('#D1AD4A');
   static var darkRed = HexColor('#C45959');

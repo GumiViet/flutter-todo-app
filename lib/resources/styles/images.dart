@@ -9,4 +9,8 @@ class AppImages {
   static String imgDemo_7 = "${base_asset}img_demo_7.jpg";
   static String icRemove = "${base_asset}ic_remove.png";
   static String icAccept = "${base_asset}ic_accept.png";
+  static String imgTutorial_1 = "${base_asset}img_tutorial_1.png";
+  static String imgTutorial_2 = "${base_asset}img_tutorial_2.png";
+  static String imgTutorial_3 = "${base_asset}img_tutorial_3.png";
+  static String imgTutorial_4 = "${base_asset}img_tutorial_4.png";
 }

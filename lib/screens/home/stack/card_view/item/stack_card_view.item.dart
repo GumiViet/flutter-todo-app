@@ -127,8 +127,8 @@ class _StackedCardViewItemState extends State<StackedCardViewItem>
   void _onPanEnd(DragEndDetails details) {
     if (!widget.isDraggable) return;
     final dragVector = containerOffset / containerOffset.distance;
-    final isInLeftRegion = (containerOffset.dx / context.size.width) < -0.45;
-    final isInRightRegion = (containerOffset.dx / context.size.width) > 0.45;
+    final isInLeftRegion = (containerOffset.dx / context.size.width) < -0.25;
+    final isInRightRegion = (containerOffset.dx / context.size.width) > 0.25;
     setState(() {
       // if ((isInLeftRegion || isInRightRegion) && widget.statusComplete) {
       //   slideOutTween = Tween(
