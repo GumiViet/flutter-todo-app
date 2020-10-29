@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_to_do/screens/home/stack/card/stack_card.dart';
+import 'package:flutter_to_do/@core/repo/matching/matching.model.dart';
 
 class StackedCardSet {
-  final List<StackedCard> cards;
+  final List<MatchingModel> cards;
 
   int _currentCardIndex = 0;
 
@@ -16,17 +16,17 @@ class StackedCardSet {
         : _currentCardIndex;
   }
 
-  StackedCard getFirstCard() {
+  MatchingModel getFirstCard() {
     return cards[_currentCardIndex];
   }
 
-  StackedCard getNextCard() {
+  MatchingModel getNextCard() {
     return _currentCardIndex < cards.length - 1
         ? cards[_currentCardIndex + 1]
         : null;
   }
 
   String getKey() {
-    return getFirstCard().title;
+    return getFirstCard().fullName;
   }
 }

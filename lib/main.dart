@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_to_do/@core/constants.dart';
 import 'package:flutter_to_do/main.route.dart';
 import 'package:flutter_to_do/resources/localization/app_translations_delegate.dart';
@@ -12,7 +13,8 @@ import 'package:route_annotation/route_annotation.dart';
 
 import '@core/dependency_injection.dart';
 
-void main() async => {
+void main() async =>
+    {
       initInject(),
       await initLangCode(),
       Provider.debugCheckInvalidValueType = null,
@@ -36,8 +38,10 @@ class _MyAppState extends State<MyApp> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    _newLocaleDelegate = AppTranslationsDelegate(newLocale: Locale(AppConstants.JA_CODE,""));
+    _newLocaleDelegate =
+        AppTranslationsDelegate(newLocale: Locale(AppConstants.JA_CODE, ""));
     application.onLocaleChanged = onLocaleChange;
+    initLoading();
   }
 
   @override
@@ -51,8 +55,11 @@ class _MyAppState extends State<MyApp> {
           theme: AppStyles.mainTheme,
           key: myKey,
           navigatorKey: application.getNavigatorKey(isGenNewKey: true),
-          // initialRoute: AppConstants.ROUTE_HOME_SCREEN,
-          initialRoute: AppConstants.ROUTE_SPLASH,
+          builder: (BuildContext context, Widget widget) {
+            return FlutterEasyLoading(child: widget);
+          },
+          initialRoute: AppConstants.ROUTE_HOME_SCREEN,
+          // initialRoute: AppConstants.ROUTE_SPLASH,
           onGenerateRoute: generateRoute,
           localizationsDelegates: [
             _newLocaleDelegate,
@@ -72,4 +79,20 @@ class _MyAppState extends State<MyApp> {
       _newLocaleDelegate = AppTranslationsDelegate(newLocale: locale);
     });
   }
+
+  void initLoading() =>
+      EasyLoading.instance
+        ..displayDuration = const Duration(milliseconds: 1000)
+        ..indicatorType = EasyLoadingIndicatorType.fadingCircle
+        ..maskType = EasyLoadingMaskType.black
+        ..loadingStyle = EasyLoadingStyle.light
+        ..toastPosition = EasyLoadingToastPosition.bottom
+        ..indicatorSize = 45.0
+        ..radius = 10.0
+        ..backgroundColor = Colors.green
+        ..indicatorColor = Colors.yellow
+        ..textColor = Colors.yellow
+        ..maskColor = Colors.blue.withOpacity(0.5)
+        ..userInteractions = false;
+
 }

@@ -3,5 +3,11 @@
     "text_start": "START",
     "text_title_skip": "スキップ",
     "text_title_matching": "マッチング候補",
-    "text_title_message": "チャット"
+    "text_title_message": "チャット",
+    "text_loading": "読み込み中",
+    "text_view_more": "+ プロフィール詳細を見る",
+    "text_text_remove": "興味なし",
+    "text_text_accept": "興味あり",
+    "text_text_interests": "興味・関心",
+    "text_text_skills": "スキル"
 }

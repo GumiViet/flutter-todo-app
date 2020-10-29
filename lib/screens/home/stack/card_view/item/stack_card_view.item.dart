@@ -2,16 +2,14 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_to_do/@core/enums.dart';
-import 'package:flutter_to_do/@core/services/log.service.dart';
-import 'package:flutter_to_do/screens/home/stack/card/stack_card.dart';
+import 'package:flutter_to_do/@core/repo/matching/matching.model.dart';
 import 'package:flutter_to_do/screens/home/stack/card_view/content/stack_card_view.item.content.dart';
 import 'package:fluttery_dart2/layout.dart';
 
 class StackedCardViewItem extends StatefulWidget {
   final bool isDraggable;
-  final StackedCard card;
+  final MatchingModel card;
   final Function(double, double) onSlideUpdate;
-  final Function(SlideDirection) onSlideComplete;
   final double scale;
   final bool statusComplete;
   double handleLeftRight;
@@ -21,7 +19,6 @@ class StackedCardViewItem extends StatefulWidget {
     this.isDraggable: true,
     @required this.card,
     this.onSlideUpdate,
-    this.onSlideComplete,
     this.scale: 1.0,
     this.statusComplete: true,
   }) : super(key: key);
@@ -93,8 +90,6 @@ class _StackedCardViewItemState extends State<StackedCardViewItem>
             dragStartPosition = null;
             dragCurrentPosition = null;
             slideOutTween = null;
-            if (widget.onSlideComplete != null)
-              widget.onSlideComplete(slideOutDirection);
           });
         }
       });
@@ -126,20 +121,9 @@ class _StackedCardViewItemState extends State<StackedCardViewItem>
 
   void _onPanEnd(DragEndDetails details) {
     if (!widget.isDraggable) return;
-    final dragVector = containerOffset / containerOffset.distance;
     final isInLeftRegion = (containerOffset.dx / context.size.width) < -0.25;
     final isInRightRegion = (containerOffset.dx / context.size.width) > 0.25;
     setState(() {
-      // if ((isInLeftRegion || isInRightRegion) && widget.statusComplete) {
-      //   slideOutTween = Tween(
-      //       end: containerOffset, begin: dragVector * (2 * context.size.width));
-      //   slideOutAnimation.forward(from: 0.0);
-      //   slideOutDirection =
-      //       isInLeftRegion ? SlideDirection.Left : SlideDirection.Right;
-      // } else {
-      //   slideBackStartPosition = containerOffset;
-      //   slideBackAnimation.forward(from: 0.0);
-      // }
       slideOutDirection = isInLeftRegion || isInRightRegion
           ? isInLeftRegion
               ? SlideDirection.Left
@@ -194,14 +178,12 @@ class _StackedCardViewItemState extends State<StackedCardViewItem>
               key: itemKey,
               width: anchorBounds.width,
               height: anchorBounds.height,
-              padding:
-                  const EdgeInsets.only(top: 0, left: 16, right: 16, bottom: 8),
               child: GestureDetector(
                 onPanStart: _onPanStart,
                 onPanUpdate: _onPanUpdate,
                 onPanEnd: _onPanEnd,
                 child: StackedCardViewItemContent(
-                  card: widget.card,
+                  model: widget.card,
                 ),
               ),
             ),

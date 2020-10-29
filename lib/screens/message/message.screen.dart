@@ -10,7 +10,6 @@ class _MessageScreenState extends State<MessageScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColors.black,
       child: Text("Message"),);
   }
 }

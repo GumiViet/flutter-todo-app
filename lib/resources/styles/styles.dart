@@ -57,6 +57,13 @@ class AppStyles {
     );
   }
 
+  TextStyle lightOrangeRegular(double size) {
+    return TextStyle(
+      fontSize: size,
+      color: AppColors.lightOrange,
+    );
+  }
+
   TextStyle darkBrownRegular(double size) {
     return TextStyle(
       fontSize: size,

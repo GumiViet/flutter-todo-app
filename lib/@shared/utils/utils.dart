@@ -4,10 +4,10 @@ import 'package:flutter_to_do/resources/localization/app_translations.dart';
 String getString(BuildContext context, String key) =>
     AppTranslations.of(context).text(key);
 
-double getWidthPercen(BuildContext context, int percen) =>
+double getWidthPercent(BuildContext context, int percen) =>
     (MediaQuery.of(context).size.width * percen) / 100;
 
-double getHeightPercen(BuildContext context, int percen) =>
+double getHeightPercent(BuildContext context, int percen) =>
     (MediaQuery.of(context).size.height * percen) / 100;
 
 void popToScreen(BuildContext context, [dynamic params]) =>

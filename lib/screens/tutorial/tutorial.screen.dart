@@ -187,7 +187,7 @@ class _TutorialScreenState extends BaseScreen<TutorialScreen> {
                 child: Center(
                     child: GestureDetector(
                   onTap: () =>
-                      goToScreen(context, AppConstants.ROUTE_HOME_SCREEN),
+                      goToAndRemoveScreen(context, AppConstants.ROUTE_HOME_SCREEN),
                   child: Text(
                     getStringById(AppLangs.text_start),
                     style: AppStyles().darkBrownRegular(20),

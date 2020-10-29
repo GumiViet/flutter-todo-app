@@ -42,8 +42,8 @@ class _PhotoViewState extends State<PhotoView> {
         ? Image.asset(
             widget.photoAssetPaths[visiblePhotoIndex],
             fit: BoxFit.cover,
-            height: getHeightPercen(context, 100),
-            width: getWidthPercen(context, 100),
+            height: getHeightPercent(context, 100),
+            width: getWidthPercent(context, 100),
           )
         : Container();
   }

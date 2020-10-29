@@ -139,23 +139,6 @@ class _StackedCardViewState extends BaseScreen<StackedCardView> {
     viewModel.setDistanceAndDraggable(distance, draggable);
   }
 
-  void _onSlideComplete(SlideDirection direction) {
-    // switch (direction) {
-    //   case SlideDirection.Left:
-    //     break;
-    //   case SlideDirection.Right:
-    //     break;
-    //   case SlideDirection.Up:
-    //     // TODO: Handle this case.
-    //     break;
-    // }
-    // viewModel.setDistanceAndDraggable(0.0, 0.0);
-    // setState(() {
-    //   widget.cardSet.incrementCardIndex();
-    //   _setItemKey();
-    // });
-  }
-
   Widget _buildBackItem(double distance) {
     return StackedCardViewItem(
         isDraggable: true, card: widget.cardSet.getNextCard(), scale: distance);
@@ -167,7 +150,6 @@ class _StackedCardViewState extends BaseScreen<StackedCardView> {
       onSlideUpdate: _onSlideUpdate,
       statusComplete:
           widget.cardSet.currentCardIndex < widget.cardSet.cards.length,
-      onSlideComplete: _onSlideComplete,
       card: widget.cardSet.getFirstCard(),
     );
   }
